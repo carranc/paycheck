@@ -27,7 +27,7 @@ small{color:var(--mut);font-size:12px;line-height:1.4;display:block}
 <h1>Paycheck calculator</h1>
 <div class="c">
 <label for="h">Hours scheduled (2-week pay period)</label>
-<input id="h" type="number" inputmode="decimal" value="22.18" step="0.25" min="0">
+<input id="h" type="number" inputmode="decimal" value="30" step="0.25" min="0">
 <label for="r">Hourly rate ($)</label>
 <input id="r" type="number" inputmode="decimal" value="20.89" step="0.01" min="0">
 </div>
@@ -37,7 +37,7 @@ small{color:var(--mut);font-size:12px;line-height:1.4;display:block}
 <div class="m" id="wk"></div>
 </div>
 <div class="c" id="rows"></div>
-<small>Rates come from your 10/09/2026 stub: Social Security 6.2%, Medicare 1.45%, state about 1.57%, federal $0 (withholding is zero at this income). If hours go up a lot, federal withholding can start, so treat big numbers as a slight overestimate. Overtime (over 40 hrs/week) is not included.</small>
+<small>Rates as of 10/01/2026. Social Security 6.2%, Medicare 1.45%, state about 1.57%, federal $0. </small>
 </div>
 <script>
 const SS=0.062, MED=0.0145, ST=7.28/463.34;
