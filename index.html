@@ -49,8 +49,8 @@ function calc(){
   document.getElementById('net').textContent=$(net);
   document.getElementById('wk').textContent='About '+$(net/2)+' per week';
   document.getElementById('rows').innerHTML=
-   [['Gross pay',g],['Social Security (6.2%)',-ss],['Medicare (1.45%)',-med],['State tax (~1.57%)',-st],['Federal tax',0]]
-   .map(a=>'<div class="r"><span>'+a[0]+'</span><span>'+(a[1]<0?'-':'')+$(Math.abs(a[1]))+'</span></div>').join('');
+   [['Social Security (6.2%)',-ss],['Medicare (1.45%)',-med],['State tax (~1.57%)',-st],['Federal tax',0]]
+   .map(a=>'<div class="r"><span>'+a[0]+'</span><span>'+(a[1]<0?'-':'')+$(Math.abs(a[1]))+'</span></div>').join('')+'<div class="r g"><span>Gross pay</span><span>'+$(g)+'</span></div>';
 }
 document.getElementById('h').addEventListener('input',calc);
 document.getElementById('r').addEventListener('input',calc);
@@ -58,3 +58,4 @@ calc();
 </script>
 </body>
 </html>
+
