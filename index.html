@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paycheck Calculator</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--tx:#1c1c1a;--mut:#6b6b66;--ac:#1d6b4f;--bd:#e2e2dd;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--card:#212120;--tx:#f0f0ec;--mut:#a0a09a;--ac:#5fc99c;--bd:#33332f}}
+:root[data-theme="dark"]{--bg:#161615;--card:#212120;--tx:#f0f0ec;--mut:#a0a09a;--ac:#5fc99c;--bd:#33332f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,sans-serif;padding:16px}
+.w{max-width:460px;margin:0 auto}
+h1{font-size:20px;margin:4px 0 14px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+input{width:100%;font-size:18px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);margin-bottom:12px}
+.big{font-size:38px;font-weight:700;color:var(--ac)}
+.r{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:15px}
+.r:last-child{border:0}
+.m{color:var(--mut)}
+small{color:var(--mut);font-size:12px;line-height:1.4;display:block}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Paycheck calculator</h1>
+<div class="c">
+<label for="h">Hours scheduled (2-week pay period)</label>
+<input id="h" type="number" inputmode="decimal" value="22.18" step="0.25" min="0">
+<label for="r">Hourly rate ($)</label>
+<input id="r" type="number" inputmode="decimal" value="20.89" step="0.01" min="0">
+</div>
+<div class="c">
+<div class="m">Estimated take-home</div>
+<div class="big" id="net">$0.00</div>
+<div class="m" id="wk"></div>
+</div>
+<div class="c" id="rows"></div>
+<small>Rates come from your 10/09/2026 stub: Social Security 6.2%, Medicare 1.45%, state about 1.57%, federal $0 (withholding is zero at this income). If hours go up a lot, federal withholding can start, so treat big numbers as a slight overestimate. Overtime (over 40 hrs/week) is not included.</small>
+</div>
+<script>
+const SS=0.062, MED=0.0145, ST=7.28/463.34;
+const $=n=>'$'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+function calc(){
+  const h=parseFloat(document.getElementById('h').value)||0;
+  const r=parseFloat(document.getElementById('r').value)||0;
+  const g=h*r, ss=g*SS, med=g*MED, st=g*ST, net=g-ss-med-st;
+  document.getElementById('net').textContent=$(net);
+  document.getElementById('wk').textContent='About '+$(net/2)+' per week';
+  document.getElementById('rows').innerHTML=
+   [['Gross pay',g],['Social Security (6.2%)',-ss],['Medicare (1.45%)',-med],['State tax (~1.57%)',-st],['Federal tax',0]]
+   .map(a=>'<div class="r"><span>'+a[0]+'</span><span>'+(a[1]<0?'-':'')+$(Math.abs(a[1]))+'</span></div>').join('');
+}
+document.getElementById('h').addEventListener('input',calc);
+document.getElementById('r').addEventListener('input',calc);
+calc();
+</script>
+</body>
+</html>
